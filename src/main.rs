@@ -53,7 +53,7 @@ fn decrypt_message() {
 
 fn decrypt_message_image() {
     let mut image_path = String::new();
-    println!("Enter the path to the image:");
+    println!("Et1ner the path to the image:");
 
     io::stdin()
         .read_line(&mut image_path)

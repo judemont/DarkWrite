@@ -28,6 +28,7 @@ pub fn hide_message_in_image(
             let message_bit_index = bit_index % 8;
 
             let message_bit = (binary_message[message_byte_index] >> (7 - message_bit_index)) & 1;
+            let message_bit = message_bit ^ 1; // Invert the bit to make it harder to detect the steganography.
 
             let color_lsb = *color_byte & 1;
 
@@ -68,6 +69,7 @@ pub fn extract_message_from_image(image_path: &str) -> ImageResult<String> {
         for color_byte in &pixel[0..3] {
             let lsb = color_byte & 1;
             current_byte = (current_byte << 1) | lsb;
+            current_byte = current_byte ^ 1; // Invert the bit to match the encoding process.
             bit_count += 1;
 
             if bit_count == 8 {
