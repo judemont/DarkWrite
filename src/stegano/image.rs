@@ -73,9 +73,6 @@ pub fn extract_message_from_image(image_path: &str) -> ImageResult<String> {
             bit_count += 1;
 
             if bit_count == 8 {
-                if current_byte == 0 {
-                    return Ok(String::from_utf8_lossy(&binary_message).to_string());
-                }
                 binary_message.push(current_byte);
                 current_byte = 0;
                 bit_count = 0;

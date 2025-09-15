@@ -1,4 +1,4 @@
-use std::fs;
+use std::{fs, string};
 
 use rand::seq::IndexedRandom;
 
@@ -25,4 +25,9 @@ pub fn get_random_image_path(directory: &str) -> String {
         .to_str()
         .unwrap()
         .to_string();
+}
+
+
+pub fn is_valid_char(c: &char) -> bool {
+    c.is_ascii() || c.is_alphabetic() || c.is_whitespace()
 }

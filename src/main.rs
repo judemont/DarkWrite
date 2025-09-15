@@ -40,7 +40,8 @@ fn encrypt_message_image(message: &str) {
     let image_path = utils::get_random_image_path("images/");
     let output_path = "output.png";
 
-    if let Err(e) = stegano::image::hide_message_in_image(&image_path, output_path, &message.trim()) {
+    if let Err(e) = stegano::image::hide_message_in_image(&image_path, output_path, &message.trim())
+    {
         println!("Error hiding message: {}", e);
     } else {
         println!("Message hidden successfully in '{}'", output_path);
@@ -48,19 +49,29 @@ fn encrypt_message_image(message: &str) {
 }
 
 fn decrypt_message() {
-    decrypt_message_image();
+    decrypt_message_from_image();
 }
 
-fn decrypt_message_image() {
+fn decrypt_message_from_image() {
     let mut image_path = String::new();
-    println!("Et1ner the path to the image:");
+    println!("Enter the path to the image:");
 
     io::stdin()
         .read_line(&mut image_path)
         .expect("Failed to read line");
 
     match stegano::image::extract_message_from_image(&image_path.trim()) {
-        Ok(message) => println!("Message: \n{}", message),
+        Ok(message) => {
+            println!("Extracted message:");
+            println!("-----------------------------------");
+            for char in message.chars() {
+                if !utils::is_valid_char(&char) {
+                    break;
+                }
+                print!("{}", char);
+            }
+            println!("\n-----------------------------------");
+        }
         Err(e) => println!("Error extracting message: {}", e),
     }
 }
