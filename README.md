@@ -7,7 +7,7 @@
 ### 👻 Undetectable  .  🔒 Unbreakable  .  🚀 Unstoppable
 
 ---
-> Trust no messenger. Assume no security. Everything is monitored. The only way out? Protect yourself. Encryption isn’t enough : *Makes your messages disappear into the darkness*.
+**Trust no messenger. Assume no security. Everything is monitored. The only way out? Protect yourself. Encryption isn’t enough : *Makes your messages disappear into the darkness*.**
 
 DarkWrite is an open-source tool for **secure steganography and encryption**, allowing you to hide encrypted messages inside images. Your secrets stay invisible until you decide to reveal them. 
 
