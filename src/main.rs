@@ -21,7 +21,7 @@ fn action_choice(options_state: u8) {
             io::stdin()
                 .read_line(&mut choice)
                 .expect("Failed to read line");
-            let choice: u32 = choice.trim().parse().expect("Please enter a valid number");
+            let choice: u32 = choice.trim().parse().expect("Not a valid number");
             match choice {
                 1 => {
                     action_choice(1);
