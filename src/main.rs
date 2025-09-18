@@ -91,7 +91,7 @@ fn action_choice(options_state: u8) {
 
             let image_path = match utils::get_random_image_path("images/") {
                 Ok(path) => path,
-                Err(e) => {
+                Err(_) => {
                     println!("You should add images to the directory: 'images/'");
                     return;
                 }
@@ -127,7 +127,7 @@ fn action_choice(options_state: u8) {
                 Ok(encrypted_message) => {
                     let image_path = match utils::get_random_image_path("images/") {
                         Ok(path) => path,
-                        Err(e) => {
+                        Err(_) => {
                             println!("You should add images to the directory: 'images/'");
                             return;
                         }
@@ -226,7 +226,7 @@ fn test_stegano_hide_extract() {
 
     let image_path = match utils::get_random_image_path("images/") {
         Ok(path) => path,
-        Err(e) => {
+        Err(_) => {
             println!("You should add images to the directory: 'images/'");
             return;
         }
@@ -245,7 +245,7 @@ fn test_stegano_aes_hide_extract() {
 
     let image_path = match utils::get_random_image_path("images/") {
         Ok(path) => path,
-        Err(e) => {
+        Err(_) => {
             println!("You should add images to the directory: 'images/'");
             return;
         }
