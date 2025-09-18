@@ -54,7 +54,8 @@ cargo run --release
 3. Select decryption method:
    - No key: Extracts without key or password.
    - AES-256: Enter the key to decrypt the extracted message.
-4. The message is extracted from `output.png` and displayed.
+4. Enter image file path.
+5. The message is extracted and displayed.
 
 ---
 
