@@ -195,41 +195,49 @@ fn show_extracted_message(message: &String) {
 }
 
 #[test]
-fn test_steganography() {
-    let test_message = "Hello, world! This is a test for steganography.";
-    let image_path = "test_image.png";
-    let output_path = "output_test.png";
+fn test_aes_encryption() {
+    let key = "my_secret_key_1234567890".to_string();
+    let plaintext = "Hello, world! :3".to_string();
 
-    // Cache le message
-    stegano::image::hide_message_in_image(image_path, output_path, Some(test_message), None)
-        .unwrap();
+    // Encrypt the plaintext
+    let encrypted = crypto::aes::encrypt(key.clone(), plaintext.clone()).unwrap();
+    println!("Encrypted: {:?}", encrypted);
 
-    // Extrait le message
-    let extracted_message = stegano::image::extract_message_from_image(output_path).unwrap();
+    // Decrypt the ciphertext
+    let decrypted = crypto::aes::decrypt(key, encrypted).unwrap();
+    println!("Decrypted: {:?}", decrypted);
 
-    // Compare
-    assert_eq!(extracted_message, test_message);
+    assert_eq!(plaintext, decrypted);
 }
 
 #[test]
-fn test_steganography_aes() {
-    let test_message = "Hello, world! This is a test for steganography with AES encryption.";
-    let image_path = "test_image.png";
-    let output_path = "output_test.png";
-    let test_key = String::from("testkey");
+fn test_stegano_hide_extract() {
+    let message = "This is a secret message.".to_string();
+    let image_path = utils::get_random_image_path("images/");
 
-    let test_message = crypto::aes::encrypt(test_key, test_message.to_string())
-        .unwrap()
-        .iter()
-        .map(|&b| b as char)
-        .collect::<String>();
-    // Cache le message
-    stegano::image::hide_message_in_image(image_path, output_path, Some(&test_message), None)
-        .unwrap();
+    let output_path = "test_output.png";
+    stegano::image::hide_message_in_image(&image_path, output_path, Some(&message), None).unwrap();
+    let extracted_message = stegano::image::extract_message_from_image(output_path).unwrap();
+    assert_eq!(message, extracted_message);
+}
 
-    // Extrait le message
+#[test]
+fn test_stegano_aes_hide_extract() {
+    let message = "This is a secret message.".to_string();
+    let image_path = utils::get_random_image_path("images/");
+    let key = "my_secret_key_1234567890".to_string();
+    let output_path = "test_output.png";
+    // Encrypt the message
+    let message_encrypted = crypto::aes::encrypt(key.clone(), message.clone()).unwrap();
+
+    // Hide the message
+    stegano::image::hide_message_in_image(&image_path, output_path, None, Some(&message_encrypted)).unwrap();
+
+    // Extract the message
     let extracted_message = stegano::image::extract_message_from_image(output_path).unwrap();
 
-    // Compare
-    assert_eq!(extracted_message, test_message);
+    // Decrypt the message
+    let decrypted_message = crypto::aes::decrypt(key, extracted_message.into_bytes()).unwrap();
+
+    assert_eq!(message, decrypted_message);
 }
