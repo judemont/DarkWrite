@@ -36,12 +36,16 @@ pub fn decrypt(key: String, encrypted_data: Vec<u8>) -> Result<String, CryptoErr
     }
 
     let (nonce_arr, ciphered_data) = encrypted_data.split_at(12);
+
     let nonce = Nonce::from_slice(nonce_arr);
     let cipher = Aes256Gcm::new(key);
 
     let plaintext = cipher
         .decrypt(nonce, ciphered_data)
-        .map_err(|_| CryptoError::DecryptionError)?;
+        .map_err(|e| {
+            println!("Decryption error: {:?}", e);
+            CryptoError::DecryptionError
+        })?;
 
     String::from_utf8(plaintext).map_err(|_| CryptoError::Utf8ConversionError)
 }

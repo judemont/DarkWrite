@@ -75,7 +75,7 @@ pub fn hide_message_in_image(
     Ok(())
 }
 
-pub fn extract_message_from_image(image_path: &str) -> ImageResult<String> {
+pub fn extract_data_from_image(image_path: &str) -> ImageResult<Vec<u8>> {
     let img = image::open(image_path)?;
     let pixels = img.to_rgba8();
 
@@ -120,5 +120,5 @@ pub fn extract_message_from_image(image_path: &str) -> ImageResult<String> {
         }
     }
 
-    Ok(String::from_utf8_lossy(&message_bytes).to_string())
+    Ok(message_bytes)
 }

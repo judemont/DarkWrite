@@ -149,8 +149,9 @@ fn action_choice(options_state: u8) {
                 .read_line(&mut image_path)
                 .expect("Failed to read line");
 
-            match stegano::image::extract_message_from_image(&image_path.trim()) {
+            match stegano::image::extract_data_from_image(&image_path.trim()) {
                 Ok(message) => {
+                    let message = String::from_utf8_lossy(&message).to_string();
                     show_extracted_message(&message);
                 }
                 Err(e) => println!("Error extracting message: {}", e),
@@ -170,9 +171,9 @@ fn action_choice(options_state: u8) {
                 .read_line(&mut key)
                 .expect("Failed to read line");
 
-            match stegano::image::extract_message_from_image(&image_path.trim()) {
+            match stegano::image::extract_data_from_image(&image_path.trim()) {
                 Ok(message) => {
-                    match crypto::aes::decrypt(key.trim().to_string(), message.into_bytes()) {
+                    match crypto::aes::decrypt(key.trim().to_string(), message) {
                         Ok(decrypted_message) => show_extracted_message(&decrypted_message),
                         Err(e) => println!("Error decrypting message: {}", e),
                     }
@@ -217,7 +218,8 @@ fn test_stegano_hide_extract() {
 
     let output_path = "test_output.png";
     stegano::image::hide_message_in_image(&image_path, output_path, Some(&message), None).unwrap();
-    let extracted_message = stegano::image::extract_message_from_image(output_path).unwrap();
+    let extracted_message = stegano::image::extract_data_from_image(output_path).unwrap();
+    let extracted_message = String::from_utf8_lossy(&extracted_message).to_string();
     assert_eq!(message, extracted_message);
 }
 
@@ -234,10 +236,10 @@ fn test_stegano_aes_hide_extract() {
     stegano::image::hide_message_in_image(&image_path, output_path, None, Some(&message_encrypted)).unwrap();
 
     // Extract the message
-    let extracted_message = stegano::image::extract_message_from_image(output_path).unwrap();
-
+    let extracted_message = stegano::image::extract_data_from_image(output_path).unwrap();
+    println!("Extracted (encrypted) message: {:?}", extracted_message);
     // Decrypt the message
-    let decrypted_message = crypto::aes::decrypt(key, extracted_message.into_bytes()).unwrap();
+    let decrypted_message = crypto::aes::decrypt(key, extracted_message).unwrap();
 
     assert_eq!(message, decrypted_message);
 }
