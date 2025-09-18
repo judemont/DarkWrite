@@ -57,3 +57,6 @@ cargo run --release
 4. The message is extracted from `output.png` and displayed.
 
 ---
+
+> [!NOTE]
+> **Not only** for educational purpose, but for all ethical use of your free speech, everywhere in the cyber-space.
