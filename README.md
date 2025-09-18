@@ -12,6 +12,7 @@
 DarkWrite is an open-source tool for **secure steganography and encryption**, allowing you to hide encrypted messages inside images. Your secrets stay invisible until you decide to reveal them. 
 
 <img src='readme_assets/dark.png' width='400px'/>
+
 *Image from [dark.fi](https://dark.fi), under [Viral Public License](https://viralpubliclicense.org)*
 
 > [!WARNING]
