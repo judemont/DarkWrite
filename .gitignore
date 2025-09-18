@@ -2,3 +2,6 @@
 
 *.png
 !example_*.png
+!readme_assets/*.png
+*.jpg
+*.jpeg
