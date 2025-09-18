@@ -89,7 +89,13 @@ fn action_choice(options_state: u8) {
                 .read_line(&mut message)
                 .expect("Failed to read line");
 
-            let image_path = utils::get_random_image_path("images/");
+            let image_path = match utils::get_random_image_path("images/") {
+                Ok(path) => path,
+                Err(e) => {
+                    println!("You should add images to the directory: 'images/'");
+                    return;
+                }
+            };
             let output_path = "output.png";
 
             if let Err(e) = stegano::image::hide_message_in_image(
@@ -119,8 +125,13 @@ fn action_choice(options_state: u8) {
 
             match crypto::aes::encrypt(key.trim().to_string(), message.trim().to_string()) {
                 Ok(encrypted_message) => {
-                    let image_path = utils::get_random_image_path("images/");
-
+                    let image_path = match utils::get_random_image_path("images/") {
+                        Ok(path) => path,
+                        Err(e) => {
+                            println!("You should add images to the directory: 'images/'");
+                            return;
+                        }
+                    };
                     let output_path = "output.png";
 
                     if let Err(e) = stegano::image::hide_message_in_image(
@@ -172,12 +183,10 @@ fn action_choice(options_state: u8) {
                 .expect("Failed to read line");
 
             match stegano::image::extract_data_from_image(&image_path.trim()) {
-                Ok(message) => {
-                    match crypto::aes::decrypt(key.trim().to_string(), message) {
-                        Ok(decrypted_message) => show_extracted_message(&decrypted_message),
-                        Err(e) => println!("Error decrypting message: {}", e),
-                    }
-                }
+                Ok(message) => match crypto::aes::decrypt(key.trim().to_string(), message) {
+                    Ok(decrypted_message) => show_extracted_message(&decrypted_message),
+                    Err(e) => println!("Error decrypting message: {}", e),
+                },
                 Err(e) => println!("Error extracting message: {}", e),
             }
         }
@@ -214,7 +223,14 @@ fn test_aes_encryption() {
 #[test]
 fn test_stegano_hide_extract() {
     let message = "This is a secret message.".to_string();
-    let image_path = utils::get_random_image_path("images/");
+
+    let image_path = match utils::get_random_image_path("images/") {
+        Ok(path) => path,
+        Err(e) => {
+            println!("You should add images to the directory: 'images/'");
+            return;
+        }
+    };
 
     let output_path = "test_output.png";
     stegano::image::hide_message_in_image(&image_path, output_path, Some(&message), None).unwrap();
@@ -226,14 +242,22 @@ fn test_stegano_hide_extract() {
 #[test]
 fn test_stegano_aes_hide_extract() {
     let message = "This is a secret message.".to_string();
-    let image_path = utils::get_random_image_path("images/");
+
+    let image_path = match utils::get_random_image_path("images/") {
+        Ok(path) => path,
+        Err(e) => {
+            println!("You should add images to the directory: 'images/'");
+            return;
+        }
+    };
     let key = "my_secret_key_1234567890".to_string();
     let output_path = "test_output.png";
     // Encrypt the message
     let message_encrypted = crypto::aes::encrypt(key.clone(), message.clone()).unwrap();
 
     // Hide the message
-    stegano::image::hide_message_in_image(&image_path, output_path, None, Some(&message_encrypted)).unwrap();
+    stegano::image::hide_message_in_image(&image_path, output_path, None, Some(&message_encrypted))
+        .unwrap();
 
     // Extract the message
     let extracted_message = stegano::image::extract_data_from_image(output_path).unwrap();
