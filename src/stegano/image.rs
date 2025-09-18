@@ -25,8 +25,9 @@ pub fn hide_message_in_image(
         }
     };
 
-    let total_bits = binary_message.len() * 8;
+    let msg_len = binary_message.len() as u32;
     let mut bit_index: usize = 0;
+    let total_bits = 32 + binary_message.len() * 8; 
 
     for pixel in pixels.chunks_mut(4) {
         if bit_index >= total_bits {
@@ -38,11 +39,15 @@ pub fn hide_message_in_image(
                 break;
             }
 
-            let message_byte_index = bit_index / 8;
-            let message_bit_index = bit_index % 8;
-
-            let message_bit = (binary_message[message_byte_index] >> (7 - message_bit_index)) & 1;
-            let message_bit = message_bit ^ 1; // Invert the bit to make it harder to detect the steganography.
+            let message_bit = if bit_index < 32 {
+                ((msg_len >> (31 - bit_index)) & 1) as u8
+            } else {
+                let msg_bit_index = bit_index - 32;
+                let message_byte_index = msg_bit_index / 8;
+                let message_bit_index = msg_bit_index % 8;
+                (binary_message[message_byte_index] >> (7 - message_bit_index)) & 1
+            };
+            let message_bit = message_bit ^ 1;
 
             let color_lsb = *color_byte & 1;
 
@@ -74,24 +79,46 @@ pub fn extract_message_from_image(image_path: &str) -> ImageResult<String> {
     let img = image::open(image_path)?;
     let pixels = img.to_rgba8();
 
-    let mut binary_message: Vec<u8> = Vec::new();
-    let mut current_byte: u8 = 0;
-    let mut bit_count: usize = 0;
+    let mut msg_len: u32 = 0;
+    let mut bit_index: usize = 0;
+
+
+    let mut length_bits: Vec<u8> = Vec::with_capacity(32);
+    let mut message_bits: Vec<u8> = Vec::new();
 
     for pixel in pixels.chunks(4) {
         for color_byte in &pixel[0..3] {
             let lsb = color_byte & 1;
-            current_byte = (current_byte << 1) | lsb;
-            current_byte = current_byte ^ 1; // Invert the bit to match the encoding process.
-            bit_count += 1;
-
-            if bit_count == 8 {
-                binary_message.push(current_byte);
-                current_byte = 0;
-                bit_count = 0;
+            let lsb = lsb ^ 1; // Invert the bit to match encoding
+            if bit_index < 32 {
+                length_bits.push(lsb);
+            } else {
+                message_bits.push(lsb);
+            }
+            bit_index += 1;
+            if bit_index >= 32 + message_bits.len() {
             }
         }
     }
 
-    Ok(String::from_utf8_lossy(&binary_message).to_string())
+    for i in 0..32 {
+        msg_len <<= 1;
+        msg_len |= length_bits[i] as u32;
+    }
+
+    let mut message_bytes: Vec<u8> = Vec::with_capacity(msg_len as usize);
+    let mut cur_byte: u8 = 0;
+    let mut cur_bit: usize = 0;
+    for i in 0..(msg_len * 8) as usize {
+        let bit = message_bits.get(i).copied().unwrap_or(0);
+        cur_byte = (cur_byte << 1) | bit;
+        cur_bit += 1;
+        if cur_bit == 8 {
+            message_bytes.push(cur_byte);
+            cur_byte = 0;
+            cur_bit = 0;
+        }
+    }
+
+    Ok(String::from_utf8_lossy(&message_bytes).to_string())
 }

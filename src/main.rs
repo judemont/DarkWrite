@@ -122,7 +122,7 @@ fn action_choice(options_state: u8) {
                     let image_path = utils::get_random_image_path("images/");
 
                     let output_path = "output.png";
-                    
+
                     if let Err(e) = stegano::image::hide_message_in_image(
                         &image_path,
                         output_path,
@@ -151,7 +151,6 @@ fn action_choice(options_state: u8) {
 
             match stegano::image::extract_message_from_image(&image_path.trim()) {
                 Ok(message) => {
-                    let message = filter_message(&message);
                     show_extracted_message(&message);
                 }
                 Err(e) => println!("Error extracting message: {}", e),
@@ -173,7 +172,6 @@ fn action_choice(options_state: u8) {
 
             match stegano::image::extract_message_from_image(&image_path.trim()) {
                 Ok(message) => {
-                    let message = filter_message(&message);
                     match crypto::aes::decrypt(key.trim().to_string(), message.into_bytes()) {
                         Ok(decrypted_message) => show_extracted_message(&decrypted_message),
                         Err(e) => println!("Error decrypting message: {}", e),
@@ -191,17 +189,26 @@ fn action_choice(options_state: u8) {
 
 fn show_extracted_message(message: &String) {
     println!("\nExtracted message:");
-    println!("-----------------------------------");
+    println!("-----------------------------------\n");
     println!("{}", message);
     println!("\n-----------------------------------");
 }
 
-fn filter_message(message: &String) -> String {
-    let mut filtered_message = String::new();
-    for char in message.chars() {
-        if utils::is_valid_char(&char) {
-            filtered_message.push(char);
-        }
-    }
-    filtered_message
+
+
+#[test]
+fn test_steganography() {
+    let test_message = "Hello, world! This is a test for steganography.";
+    let image_path = "test_image.png";
+    let output_path = "output_test.png";
+
+    // Cache le message
+    stegano::image::hide_message_in_image(image_path, output_path, Some(test_message), None)
+        .unwrap();
+
+    // Extrait le message
+    let extracted_message = stegano::image::extract_message_from_image(output_path).unwrap();
+
+    // Compare
+    assert_eq!(extracted_message, test_message);
 }

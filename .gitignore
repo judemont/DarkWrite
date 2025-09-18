@@ -1,3 +1,4 @@
 /target
 /images
-output.png
+
+*.png
