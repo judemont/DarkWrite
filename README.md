@@ -56,3 +56,4 @@ cargo run --release
    - AES-256: Enter the key to decrypt the extracted message.
 4. The message is extracted from `output.png` and displayed.
 
+---
