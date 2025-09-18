@@ -21,8 +21,8 @@ DarkWrite is an open-source tool for **secure steganography and encryption**, al
 - **End-to-End encryption [WIP]**: Planned support for secure key exchange and message confidentiality between sender and receiver.
 
 ## Security
-- **Undetectable steganography**: DarkWrite uses advanced steganography techniques to be undetectable by steganalysis tools¹.
-- **Secure encryption**: DarkWrite uses the AES-256 encryption algorithm, known to be one of the most secure to date.
+- **Steganography with obfuscation**: DarkWrite uses LSB combined with obfuscation to help evade detection by steganalysis tools¹.
+- **Military-Grade Encryption**: Messages are encrypted using **AES-256-GCM**, one of the most secure encryption algorithms available today.
 
 > ¹ DarkWrite's steganography has not been detected by any of the steganography detection tools I have had the opportunity to try (with or without encryption).
 
@@ -54,11 +54,4 @@ cargo run --release
    - No key: Extracts without key or password.
    - AES-256: Enter the key to decrypt the extracted message.
 4. The message is extracted from `output.png` and displayed.
-
-## How It Works
-
-- The message length is encoded in the first 32 bits of the image.
-- Each bit of the message is hidden in the least significant bit of the image’s pixel data.
-- For encryption, AES-256-GCM is used to secure the message before embedding.
-- Extraction reads the length, then reconstructs the message from the image data, and decrypts if needed.
 
