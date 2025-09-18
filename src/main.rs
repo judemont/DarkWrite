@@ -194,8 +194,6 @@ fn show_extracted_message(message: &String) {
     println!("\n-----------------------------------");
 }
 
-
-
 #[test]
 fn test_steganography() {
     let test_message = "Hello, world! This is a test for steganography.";
@@ -204,6 +202,29 @@ fn test_steganography() {
 
     // Cache le message
     stegano::image::hide_message_in_image(image_path, output_path, Some(test_message), None)
+        .unwrap();
+
+    // Extrait le message
+    let extracted_message = stegano::image::extract_message_from_image(output_path).unwrap();
+
+    // Compare
+    assert_eq!(extracted_message, test_message);
+}
+
+#[test]
+fn test_steganography_aes() {
+    let test_message = "Hello, world! This is a test for steganography with AES encryption.";
+    let image_path = "test_image.png";
+    let output_path = "output_test.png";
+    let test_key = String::from("testkey");
+
+    let test_message = crypto::aes::encrypt(test_key, test_message.to_string())
+        .unwrap()
+        .iter()
+        .map(|&b| b as char)
+        .collect::<String>();
+    // Cache le message
+    stegano::image::hide_message_in_image(image_path, output_path, Some(&test_message), None)
         .unwrap();
 
     // Extrait le message
