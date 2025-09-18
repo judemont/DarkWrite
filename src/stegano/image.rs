@@ -4,15 +4,29 @@ use rand::random;
 pub fn hide_message_in_image(
     image_path: &str,
     output_path: &str,
-    message: &str,
+    message: Option<&str>,
+    binary_message: Option<&[u8]>,
 ) -> ImageResult<()> {
-
     let img = image::open(image_path)?;
     let mut pixels = img.to_rgba8();
-    let binary_message = message.as_bytes();
+
+    let binary_message = match (message, binary_message) {
+        (Some(msg), None) => msg.as_bytes(),
+        (None, Some(b)) => b,
+        _ => {
+            return Err(image::ImageError::Unsupported(
+                image::error::UnsupportedError::from_format_and_kind(
+                    image::ImageFormat::Png.into(),
+                    image::error::UnsupportedErrorKind::GenericFeature(
+                        "Either message or binary_message must be provided.".to_string(),
+                    ),
+                ),
+            ));
+        }
+    };
 
     let total_bits = binary_message.len() * 8;
-    let mut bit_index: usize = 0; 
+    let mut bit_index: usize = 0;
 
     for pixel in pixels.chunks_mut(4) {
         if bit_index >= total_bits {
@@ -55,7 +69,6 @@ pub fn hide_message_in_image(
 
     Ok(())
 }
-
 
 pub fn extract_message_from_image(image_path: &str) -> ImageResult<String> {
     let img = image::open(image_path)?;
