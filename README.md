@@ -59,4 +59,4 @@ cargo run --release
 ---
 
 > [!NOTE]
-> **Not only** for educational purpose, but for all ethical use of your free speech, everywhere in the cyber-space.
+> **Not only** for educational use, but for all ethical use of your free speech, everywhere in the cyber-space.
