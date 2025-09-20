@@ -32,7 +32,7 @@ DarkWrite is an open-source tool for **secure steganography and encryption**, al
 
 > ¹ DarkWrite's steganography has not been detected by any of the steganography detection tools I have had the opportunity to try (with or without encryption).
 
-## Install
+## Install 💻
 
 <img src='readme_assets/install.png' width='200px'/>
 
@@ -42,12 +42,17 @@ wget https://codeberg.org/judemont/DarkWrite/releases/download/latest/darkwrite
 chmod +x darkwrite
 sudo mv darkwrite /bin
 ```
+### Windows :
+> [!WARNING]
+> Microsoft Windows is not suitable for protecting your privacy; do not use it for sensitive cases.
+Download the latest darkwrite.exe from the [releases page](https://codeberg.org/judemont/DarkWrite/releases/download/latest/darkwrite).
 
 ## Usage 🚀
-
+> [!TIP]
+> If you are on Windows, use `darkwrite.exe`.
 ### Run the program
 ```bash
-cargo run --release <COMMAND> [OPTIONS]
+darkwrite <COMMAND> [OPTIONS]
 ```
 
 ### Commands & Options
