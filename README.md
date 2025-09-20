@@ -45,6 +45,7 @@ sudo mv darkwrite /bin
 ### Windows :
 > [!WARNING]
 > Microsoft Windows is not suitable for protecting your privacy; do not use it for sensitive cases.
+
 Download the latest darkwrite.exe from the [releases page](https://codeberg.org/judemont/DarkWrite/releases/download/latest/darkwrite).
 
 ## Usage 🚀
