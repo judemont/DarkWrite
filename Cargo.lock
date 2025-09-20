@@ -3,17 +3,6 @@
 version = 4
 
 [[package]]
-name = "DarkWrite"
-version = "1.0.0"
-dependencies = [
- "aes-gcm",
- "base64",
- "image",
- "rand 0.9.2",
- "thiserror 2.0.16",
-]
-
-[[package]]
 name = "adler2"
 version = "2.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -280,6 +269,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0369ee1ad671834580515889b80f2ea915f23b8be8d0daa4bbaf2ac5c7590835"
 dependencies = [
  "cipher",
+]
+
+[[package]]
+name = "darkwrite"
+version = "1.0.0"
+dependencies = [
+ "aes-gcm",
+ "base64",
+ "image",
+ "rand 0.9.2",
+ "thiserror 2.0.16",
 ]
 
 [[package]]
