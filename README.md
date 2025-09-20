@@ -34,7 +34,7 @@ DarkWrite is an open-source tool for **secure steganography and encryption**, al
 
 ## Install
 
-<img src='readme_assets/install.png' width='300px'/>
+<img src='readme_assets/install.png' width='200px'/>
 
 ### Linux :
 ```bash
