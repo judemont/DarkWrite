@@ -17,7 +17,7 @@ DarkWrite is an open-source tool for **secure steganography and encryption**, al
 
 
 > [!WARNING]
-> This project is still in beta and has not received external security review and may contain vulnerabilities. Do not use for sensitive use cases.
+> This project is still in early stages and has not received external security review and may contain vulnerabilities. Do not use for sensitive use cases.
 
 ## Features ✨
 - **Steganography**: Hide messages or files inside images by modifying pixel data.
