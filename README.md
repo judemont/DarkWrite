@@ -40,7 +40,7 @@ DarkWrite is an open-source tool for **secure steganography and encryption**, al
 ```bash
 wget https://codeberg.org/judemont/DarkWrite/releases/download/latest/darkwrite
 chmod +x darkwrite
-cp darkwrite /bin
+mv darkwrite /bin
 ```
 
 ## Usage 🚀
