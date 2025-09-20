@@ -617,6 +617,13 @@ https://codeberg.org/judemont/DarkWrite/releases/download/latest/darkwrite.exe</
                         </div>
                     </div>
                 </div>
+
+                <div style="text-align: center; margin-top: 3rem;">
+                    <p style="color: #cccccc; margin-bottom: 1rem;">For complete usage documentation and advanced
+                        options:</p>
+                    <a href="https://codeberg.org/judemont/DarkWrite#usage" target="_blank"
+                        class="btn btn-secondary">View Complete Documentation</a>
+                </div>
             </div>
         </section>
     </main>
@@ -645,7 +652,9 @@ https://codeberg.org/judemont/DarkWrite/releases/download/latest/darkwrite.exe</
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>DarkWrite under <a href="https://codeberg.org/judemont/DarkWrite/blob/main/LICENSE" target="_blank">Viral Public License</a>. Open source project by <a href="http://futureofthe.tech" target="_blank" rel="noopener noreferrer">judemont</a>.</p>
+                <p>DarkWrite under <a href="https://codeberg.org/judemont/DarkWrite/blob/main/LICENSE"
+                        target="_blank">Viral Public License</a>. Open source project by <a
+                        href="http://futureofthe.tech" target="_blank" rel="noopener noreferrer">judemont</a>.</p>
             </div>
         </div>
     </footer>
@@ -685,25 +694,57 @@ https://codeberg.org/judemont/DarkWrite/releases/download/latest/darkwrite.exe</
             event.target.classList.add('active');
         }
 
-        // Copy code functionality
         function copyCode(button) {
-            const codeBlock = button.nextElementSibling;
+            const codeBlock = button.parentElement.querySelector('pre');
             const text = codeBlock.textContent;
-
-            navigator.clipboard.writeText(text).then(() => {
-                const originalText = button.textContent;
-                button.textContent = 'Copied!';
-                button.style.background = '#00ff88';
-                button.style.color = '#000000';
-
-                setTimeout(() => {
-                    button.textContent = originalText;
-                    button.style.background = 'rgba(0, 255, 136, 0.1)';
-                    button.style.color = '#00ff88';
-                }, 2000);
-            });
+            const originalText = button.textContent;
+        
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    button.textContent = 'Copied!';
+                    button.style.background = '#00ff88';
+                    button.style.color = '#000000';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.background = 'rgba(0, 255, 136, 0.1)';
+                        button.style.color = '#00ff88';
+                    }, 2000);
+                }).catch(() => {
+                    showCopyError(button, originalText);
+                });
+            } else {
+                // Fallback for older browsers
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    button.textContent = 'Copied!';
+                    button.style.background = '#00ff88';
+                    button.style.color = '#000000';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.background = 'rgba(0, 255, 136, 0.1)';
+                        button.style.color = '#00ff88';
+                    }, 2000);
+                } catch (err) {
+                    showCopyError(button, originalText);
+                }
+                document.body.removeChild(textarea);
+            }
         }
-
+        
+        function showCopyError(button, originalText) {
+            button.textContent = 'Failed!';
+            button.style.background = '#ff4444';
+            button.style.color = '#ffffff';
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = 'rgba(0, 255, 136, 0.1)';
+                button.style.color = '#00ff88';
+            }, 2000);
+        }
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
