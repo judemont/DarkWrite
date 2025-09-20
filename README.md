@@ -43,37 +43,39 @@ cargo run --release <COMMAND> [OPTIONS]
 
 #### Hide a message
 ```bash
-darkwrite hide <MESSAGE> [--key <KEY>] [--output <OUTPUT_PATH>]
+darkwrite hide <MESSAGE> <INPUT_IMAGE> [--key <KEY>] [--output <OUTPUT_PATH>]
 ```
 - `<MESSAGE>`: The message to hide
+- `<INPUT_IMAGE>`: Path to the image to use for hiding
 - `--key, -k`: AES-256 encryption key (optional)
 - `--output, -o`: Output path (default: output.png)
 
 #### Hide a file
 ```bash
-darkwrite hide-file <FILE_PATH> [--key <KEY>] [--output <OUTPUT_PATH>]
+darkwrite hide-file <FILE_PATH> <INPUT_IMAGE> [--key <KEY>] [--output <OUTPUT_PATH>]
 ```
 - `<FILE_PATH>`: Path to the file to hide
+- `<INPUT_IMAGE>`: Path to the image to use for hiding
 - `--key, -k`: AES-256 encryption key (optional)
 - `--output, -o`: Output path (default: output.png)
 
 #### Extract a message or file
 ```bash
-darkwrite extract <IMAGE_PATH> [--key <KEY>]
+darkwrite extract <IMAGE_PATH> [--key <KEY>] [--output <OUTPUT_PATH>]
 ```
 - `<IMAGE_PATH>`: Path to the image containing the hidden data
 - `--key, -k`: AES-256 decryption key (if needed)
-- `--output, -o`:   Output path to save extracted data (optional)
+- `--output, -o`: Output path to save extracted data (optional)
 
 ### Examples
 - Hide a message:
   ```bash
-  darkwrite hide "My secret message"
-  darkwrite hide "My message" --key "my_secret_key" --output "result.png"
+  darkwrite hide "My secret message" input.png
+  darkwrite hide "My message" input.png --key "my_secret_key" --output "result.png"
   ```
 - Hide a file:
   ```bash
-  darkwrite hide-file "secret.pdf" --key "my_secret_key" --output "result.png"
+  darkwrite hide-file "secret.pdf" input.png --key "my_secret_key" --output "result.png"
   ```
 - Extract a message or file:
   ```bash

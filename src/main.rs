@@ -40,14 +40,16 @@ fn print_usage() {
     println!("  extract     Extract a message or file from an image");
     println!();
     println!("HIDE MESSAGE OPTIONS:");
-    println!("  darkwrite hide <MESSAGE> [--key <KEY>] [--output <OUTPUT_PATH>]");
+    println!("  darkwrite hide <MESSAGE> <INPUT_IMAGE> [--key <KEY>] [--output <OUTPUT_PATH>]");
     println!("    MESSAGE        The message to hide");
+    println!("    INPUT_IMAGE    Path to the image to use for hiding");
     println!("    --key, -k      AES-256 encryption key (optional)");
     println!("    --output, -o   Output path (default: output.png)");
     println!();
     println!("HIDE FILE OPTIONS:");
-    println!("  darkwrite hide-file <FILE_PATH> [--key <KEY>] [--output <OUTPUT_PATH>]");
+    println!("  darkwrite hide-file <FILE_PATH> <INPUT_IMAGE> [--key <KEY>] [--output <OUTPUT_PATH>]");
     println!("    FILE_PATH      Path to the file to hide");
+    println!("    INPUT_IMAGE    Path to the image to use for hiding");
     println!("    --key, -k      AES-256 encryption key (optional)");
     println!("    --output, -o   Output path (default: output.png)");
     println!();
@@ -58,26 +60,27 @@ fn print_usage() {
     println!("    --output, -o   Output path to save extracted data (optional)");
     println!();
     println!("EXAMPLES:");
-    println!("  darkwrite hide \"My secret message\"");
-    println!("  darkwrite hide \"My message\" --key \"my_secret_key\" --output \"result.png\"");
-    println!("  darkwrite hide-file \"secret.pdf\" --key \"my_secret_key\" --output \"result.png\"");
+    println!("  darkwrite hide \"My secret message\" input.png");
+    println!("  darkwrite hide \"My message\" input.png --key \"my_secret_key\" --output \"result.png\"");
+    println!("  darkwrite hide-file \"secret.pdf\" input.png --key \"my_secret_key\" --output \"result.png\"");
     println!("  darkwrite extract \"result.png\"");
     println!("  darkwrite extract \"result.png\" --key \"my_secret_key\"");
     println!("  darkwrite extract \"result.png\" --key \"my_secret_key\" --output \"file.pdf\"");
 }
 
 fn handle_hide_file_command(args: &[String]) {
-    if args.len() < 3 {
-        println!("Error: Missing file path");
-        println!("Usage: darkwrite hide-file <FILE_PATH> [--key <KEY>] [--output <OUTPUT_PATH>]");
+    if args.len() < 4 {
+        println!("Error: Missing file path or input image");
+        println!("Usage: darkwrite hide-file <FILE_PATH> <INPUT_IMAGE> [--key <KEY>] [--output <OUTPUT_PATH>]");
         process::exit(1);
     }
     let file_path = &args[2];
+    let input_image = &args[3];
     let mut key: Option<String> = None;
     let mut output_path = "output.png".to_string();
 
     // Parse optional arguments
-    let mut i = 3;
+    let mut i = 4;
     while i < args.len() {
         match args[i].as_str() {
             "--key" | "-k" => {
@@ -114,15 +117,6 @@ fn handle_hide_file_command(args: &[String]) {
         }
     };
 
-    // Get a random image path
-    let image_path = match utils::get_random_image_path("images/") {
-        Ok(path) => path,
-        Err(_) => {
-            println!("Error: You must add images to the './images/' directory");
-            process::exit(1);
-        }
-    };
-
     // Process based on whether a key is provided
     match key {
         Some(encryption_key) => {
@@ -130,7 +124,7 @@ fn handle_hide_file_command(args: &[String]) {
             match crypto::aes::encrypt(encryption_key, String::from_utf8_lossy(&file_bytes).to_string()) {
                 Ok(encrypted_file) => {
                     if let Err(e) = stegano::image::hide_message_in_image(
-                        &image_path,
+                        input_image,
                         &output_path,
                         None,
                         Some(&encrypted_file),
@@ -150,7 +144,7 @@ fn handle_hide_file_command(args: &[String]) {
         None => {
             // No encryption
             if let Err(e) = stegano::image::hide_message_in_image(
-                &image_path,
+                input_image,
                 &output_path,
                 None,
                 Some(&file_bytes),
@@ -165,17 +159,18 @@ fn handle_hide_file_command(args: &[String]) {
 }
 
 fn handle_hide_command(args: &[String]) {
-    if args.len() < 3 {
-        println!("Error: Missing message");
-        println!("Usage: darkwrite hide <MESSAGE> [--key <KEY>] [--output <OUTPUT_PATH>]");
+    if args.len() < 4 {
+        println!("Error: Missing message or input image");
+        println!("Usage: darkwrite hide <MESSAGE> <INPUT_IMAGE> [--key <KEY>] [--output <OUTPUT_PATH>]");
         process::exit(1);
     }
     let message = &args[2];
+    let input_image = &args[3];
     let mut key: Option<String> = None;
     let mut output_path = "output.png".to_string();
 
     // Parse optional arguments
-    let mut i = 3;
+    let mut i = 4;
     while i < args.len() {
         match args[i].as_str() {
             "--key" | "-k" => {
@@ -203,14 +198,6 @@ fn handle_hide_command(args: &[String]) {
         }
     }
 
-    // Get a random image path
-    let image_path = match utils::get_random_image_path("images/") {
-        Ok(path) => path,
-        Err(_) => {
-            println!("Error: You must add images to the './images/' directory");
-            process::exit(1);
-        }
-    };
 
     // Process based on whether a key is provided
     match key {
@@ -219,7 +206,7 @@ fn handle_hide_command(args: &[String]) {
             match crypto::aes::encrypt(encryption_key, message.clone()) {
                 Ok(encrypted_message) => {
                     if let Err(e) = stegano::image::hide_message_in_image(
-                        &image_path,
+                        input_image,
                         &output_path,
                         None,
                         Some(&encrypted_message),
@@ -242,7 +229,7 @@ fn handle_hide_command(args: &[String]) {
         None => {
             // No encryption
             if let Err(e) = stegano::image::hide_message_in_image(
-                &image_path,
+                input_image,
                 &output_path,
                 Some(message),
                 None,
@@ -364,13 +351,7 @@ mod tests {
     #[test]
     fn test_stegano_hide_extract() {
         let message = "This is a secret message.".to_string();
-        let image_path = match utils::get_random_image_path("images/") {
-            Ok(path) => path,
-            Err(_) => {
-                println!("You should add images to the directory: 'images/'");
-                return;
-            }
-        };
+        let image_path = "readme_assets/dark.png";
         let output_path = "test_output.png";
         stegano::image::hide_message_in_image(&image_path, output_path, Some(&message), None)
             .unwrap();
@@ -382,13 +363,7 @@ mod tests {
     #[test]
     fn test_stegano_aes_hide_extract() {
         let message = "This is a secret message.".to_string();
-        let image_path = match utils::get_random_image_path("images/") {
-            Ok(path) => path,
-            Err(_) => {
-                println!("You should add images to the directory: 'images/'");
-                return;
-            }
-        };
+        let image_path = "readme_assets/dark.png";
         let key = "my_secret_key_1234567890".to_string();
         let output_path = "test_output.png";
         // Encrypt the message
