@@ -13,9 +13,8 @@ DarkWrite is an open-source tool for **secure steganography and encryption**, al
 
 ---
 
-<img src='readme_assets/dark.png' width='400px'/>
+<img src='readme_assets/darkwrite.png' width='400px'/>
 
-*Image from [dark.fi](https://dark.fi), under [Viral Public License](https://viralpubliclicense.org)*
 
 > [!WARNING]
 > This project is still in beta and has not received external security review and may contain vulnerabilities. Do not use for sensitive use cases.
