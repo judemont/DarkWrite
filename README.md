@@ -32,6 +32,17 @@ DarkWrite is an open-source tool for **secure steganography and encryption**, al
 
 > ¹ DarkWrite's steganography has not been detected by any of the steganography detection tools I have had the opportunity to try (with or without encryption).
 
+## Install
+
+<img src='readme_assets/install.png' width='300px'/>
+
+### Linux :
+```bash
+wget https://codeberg.org/judemont/DarkWrite/releases/download/latest/darkwrite
+chmod +x darkwrite
+cp darkwrite /bin
+```
+
 ## Usage 🚀
 
 ### Run the program
