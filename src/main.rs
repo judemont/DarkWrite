@@ -118,7 +118,7 @@ fn handle_hide_file_command(args: &[String]) {
     let image_path = match utils::get_random_image_path("images/") {
         Ok(path) => path,
         Err(_) => {
-            println!("Error: You must add images to the 'images/' directory");
+            println!("Error: You must add images to the './images/' directory");
             process::exit(1);
         }
     };
@@ -207,7 +207,7 @@ fn handle_hide_command(args: &[String]) {
     let image_path = match utils::get_random_image_path("images/") {
         Ok(path) => path,
         Err(_) => {
-            println!("Error: You must add images to the 'images/' directory");
+            println!("Error: You must add images to the './images/' directory");
             process::exit(1);
         }
     };
