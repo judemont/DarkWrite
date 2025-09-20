@@ -63,6 +63,7 @@ fn print_usage() {
     println!("  darkwrite hide-file \"secret.pdf\" --key \"my_secret_key\" --output \"result.png\"");
     println!("  darkwrite extract \"result.png\"");
     println!("  darkwrite extract \"result.png\" --key \"my_secret_key\"");
+    println!("  darkwrite extract \"result.png\" --key \"my_secret_key\" --output \"file.pdf\"");
 }
 
 fn handle_hide_file_command(args: &[String]) {

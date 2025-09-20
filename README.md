@@ -79,6 +79,7 @@ darkwrite extract <IMAGE_PATH> [--key <KEY>]
   ```bash
   darkwrite extract "result.png"
   darkwrite extract "result.png" --key "my_secret_key"
+  darkwrite extract "result.png" --key "my_secret_key" --output "file.pdf"
   ```
 
 ---
