@@ -63,6 +63,7 @@ darkwrite extract <IMAGE_PATH> [--key <KEY>]
 ```
 - `<IMAGE_PATH>`: Path to the image containing the hidden data
 - `--key, -k`: AES-256 decryption key (if needed)
+- `--output, -o`:   Output path to save extracted data (optional)
 
 ### Examples
 - Hide a message:
