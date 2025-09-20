@@ -22,7 +22,7 @@ DarkWrite is an open-source tool for **secure steganography and encryption**, al
 ## Features ✨
 - **Steganography**: Hide messages or files inside images by modifying pixel data.
 - **Encryption**: Encrypt messages or files before hiding for extra security.
-- **Simple CLI & Command Options**: Use interactive prompts or direct command-line arguments for hiding and extracting messages or files.
+- **Simple CLI**: Use direct command-line arguments for hiding and extracting messages or files.
 - **End-to-End encryption [WIP]**: Planned support for secure key exchange and message confidentiality between sender and receiver.
 
 ## Security 🔐

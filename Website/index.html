@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,10 +46,23 @@
         }
 
         @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         /* Header */
@@ -118,8 +132,13 @@
         }
 
         @keyframes glow {
-            from { filter: drop-shadow(0 0 20px rgba(0, 255, 136, 0.3)); }
-            to { filter: drop-shadow(0 0 40px rgba(0, 255, 136, 0.6)); }
+            from {
+                filter: drop-shadow(0 0 20px rgba(0, 255, 136, 0.3));
+            }
+
+            to {
+                filter: drop-shadow(0 0 40px rgba(0, 255, 136, 0.6));
+            }
         }
 
         .tagline {
@@ -395,7 +414,8 @@
             font-size: 1.2rem;
         }
 
-        .footer-section p, .footer-section a {
+        .footer-section p,
+        .footer-section a {
             color: #cccccc;
             text-decoration: none;
             margin-bottom: 0.5rem;
@@ -419,17 +439,17 @@
             .nav-links {
                 display: none;
             }
-            
+
             .hero-stats {
                 flex-direction: column;
                 gap: 1rem;
             }
-            
+
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .install-tabs {
                 flex-direction: column;
                 align-items: center;
@@ -437,6 +457,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="bg-animation" id="bgAnimation"></div>
 
@@ -472,12 +493,13 @@
                     </div>
                 </div>
                 <p style="font-size: 1.1rem; color: #999; margin: 2rem 0; font-style: italic;">
-                    "Trust no platform. Assume no security. Everything is monitored.<br>
-                    The only way out? Protect yourself."
+                    Trust no platform. Assume no security. Everything is monitored. The only way out? Protect yourself.<br />
+                    Encryption isn’t enough : <strong>Makes your messages disappear into the darkness.</strong>
                 </p>
                 <div class="cta-buttons">
                     <a href="#install" class="btn btn-primary">Get Started</a>
-                    <a href="https://github.com/judemont/DarkWrite" class="btn btn-secondary" target="_blank">View Source</a>
+                    <a href="https://github.com/judemont/DarkWrite" class="btn btn-secondary" target="_blank">View
+                        Source</a>
                 </div>
             </div>
         </section>
@@ -489,32 +511,32 @@
                     <div class="feature-card">
                         <div class="feature-icon">🖼️</div>
                         <h3>Advanced Steganography</h3>
-                        <p>Hide messages or files inside images by modifying pixel data. Your secrets stay invisible until you decide to reveal them.</p>
+                        <p>Hide messages or files inside images by modifying pixel data. Your secrets stay invisible
+                            until you decide to reveal them.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🛡️</div>
                         <h3>Military-Grade Encryption</h3>
-                        <p>Messages and files are encrypted using AES-256-GCM, one of the most secure encryption algorithms available today.</p>
+                        <p>Messages and files are encrypted using AES-256-GCM, one of the most secure encryption
+                            algorithms available today.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🕵️</div>
                         <h3>Steganography Detection Evasion</h3>
-                        <p>DarkWrite uses LSB combined with obfuscation to help evade detection by steganalysis tools.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">⚡</div>
-                        <h3>Simple CLI Interface</h3>
-                        <p>Use interactive prompts or direct command-line arguments for hiding and extracting messages or files.</p>
+                        <p>DarkWrite uses LSB combined with obfuscation to help evade detection by steganalysis tools.
+                        </p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🔄</div>
                         <h3>End-to-End Encryption</h3>
-                        <p>Planned support for secure key exchange and message confidentiality between sender and receiver.</p>
+                        <p>Planned support for secure key exchange and message confidentiality between sender and
+                            receiver.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🌐</div>
                         <h3>Open Source</h3>
-                        <p>Fully open-source and auditable code. Your privacy tools should be transparent and trustworthy.</p>
+                        <p>Fully open-source and auditable code. Your privacy tools should be transparent and
+                            trustworthy.</p>
                     </div>
                 </div>
             </div>
@@ -523,7 +545,8 @@
         <div class="warning">
             <div class="container">
                 <h3>⚠️ Security Warning</h3>
-                <p>This project is still in early stages and has not received external security review and may contain vulnerabilities. Do not use for sensitive use cases.</p>
+                <p>This project is still in early stages and has not received external security review and may contain
+                    vulnerabilities. Do not use for sensitive use cases.</p>
             </div>
         </div>
 
@@ -534,7 +557,7 @@
                     <button class="tab-btn active" onclick="showTab('linux')">Linux/macOS</button>
                     <button class="tab-btn" onclick="showTab('windows')">Windows</button>
                 </div>
-                
+
                 <div id="linux-tab" class="tab-content">
                     <div class="code-block">
                         <button class="copy-btn" onclick="copyCode(this)">Copy</button>
@@ -543,14 +566,15 @@ chmod +x darkwrite
 sudo mv darkwrite /bin</pre>
                     </div>
                 </div>
-                
+
                 <div id="windows-tab" class="tab-content" style="display: none;">
                     <div class="code-block">
                         <pre>Download darkwrite.exe from:
 https://codeberg.org/judemont/DarkWrite/releases/download/latest/darkwrite.exe</pre>
                     </div>
                     <p style="text-align: center; color: #ff6666; margin-top: 1rem; font-style: italic;">
-                        ⚠️ Microsoft Windows is not suitable for protecting your privacy; do not use it for sensitive cases.
+                        ⚠️ Microsoft Windows is not suitable for protecting your privacy; do not use it for sensitive
+                        cases.
                     </p>
                 </div>
             </div>
@@ -567,7 +591,7 @@ https://codeberg.org/judemont/DarkWrite/releases/download/latest/darkwrite.exe</
                             <pre>darkwrite hide "My secret message" input.png</pre>
                         </div>
                     </div>
-                    
+
                     <div class="example-card">
                         <h3>Hide with Encryption</h3>
                         <div class="code-block">
@@ -575,7 +599,7 @@ https://codeberg.org/judemont/DarkWrite/releases/download/latest/darkwrite.exe</
                             <pre>darkwrite hide "My message" input.png --key "my_secret_key" --output "result.png"</pre>
                         </div>
                     </div>
-                    
+
                     <div class="example-card">
                         <h3>Hide a File</h3>
                         <div class="code-block">
@@ -583,7 +607,7 @@ https://codeberg.org/judemont/DarkWrite/releases/download/latest/darkwrite.exe</
                             <pre>darkwrite hide-file "secret.pdf" input.png --key "my_secret_key" --output "result.png"</pre>
                         </div>
                     </div>
-                    
+
                     <div class="example-card">
                         <h3>Extract Hidden Data</h3>
                         <div class="code-block">
@@ -602,7 +626,8 @@ https://codeberg.org/judemont/DarkWrite/releases/download/latest/darkwrite.exe</
                 <div class="footer-section">
                     <h4>DarkWrite</h4>
                     <p>Secure steganography and encryption tool for hiding messages and files inside images.</p>
-                    <p style="margin-top: 1rem; font-style: italic;">Not only for educational purposes, but for all ethical use of your free speech, everywhere in the cyber-space.</p>
+                    <p style="margin-top: 1rem; font-style: italic;">Not only for educational purposes, but for all
+                        ethical use of your free speech, everywhere in the cyber-space.</p>
                 </div>
                 <div class="footer-section">
                     <h4>Resources</h4>
@@ -629,7 +654,7 @@ https://codeberg.org/judemont/DarkWrite/releases/download/latest/darkwrite.exe</
         function createFloatingPixels() {
             const bgAnimation = document.getElementById('bgAnimation');
             const pixelCount = 50;
-            
+
             for (let i = 0; i < pixelCount; i++) {
                 const pixel = document.createElement('div');
                 pixel.className = 'floating-pixel';
@@ -646,15 +671,15 @@ https://codeberg.org/judemont/DarkWrite/releases/download/latest/darkwrite.exe</
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.style.display = 'none';
             });
-            
+
             // Remove active class from all buttons
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            
+
             // Show selected tab
             document.getElementById(tabName + '-tab').style.display = 'block';
-            
+
             // Add active class to clicked button
             event.target.classList.add('active');
         }
@@ -663,13 +688,13 @@ https://codeberg.org/judemont/DarkWrite/releases/download/latest/darkwrite.exe</
         function copyCode(button) {
             const codeBlock = button.nextElementSibling;
             const text = codeBlock.textContent;
-            
+
             navigator.clipboard.writeText(text).then(() => {
                 const originalText = button.textContent;
                 button.textContent = 'Copied!';
                 button.style.background = '#00ff88';
                 button.style.color = '#000000';
-                
+
                 setTimeout(() => {
                     button.textContent = originalText;
                     button.style.background = 'rgba(0, 255, 136, 0.1)';
@@ -693,9 +718,10 @@ https://codeberg.org/judemont/DarkWrite/releases/download/latest/darkwrite.exe</
         });
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             createFloatingPixels();
         });
     </script>
 </body>
+
 </html>
